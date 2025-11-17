@@ -1,13 +1,15 @@
 *** Settings ***
 Library    SeleniumLibrary
 Library    libraries.webdriver_helper
-Library    libraries.driverpath
+Library    libraries.driverpath    # Provides Get Chrome Service, Get Chrome Options keywords
 
 *** Keywords ***
 Open Browser To Flipkart
     [Documentation]    Opens Flipkart home page and registers webdriver
-    ${exe}=    Get Chrome Driver Path
-    Open Browser    https://www.flipkart.com    chrome    executable_path=${exe}
+    # Prefer using Selenium Service + ChromeOptions instead of deprecated executable_path
+    ${service}=    Get Chrome Service
+    ${options}=    Get Chrome Options
+    Open Browser    https://www.flipkart.com    chrome    service=${service}    options=${options}
     Maximize Browser Window
     Run Keyword And Ignore Error    Close Login Popup
 
